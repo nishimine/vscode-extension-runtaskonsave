@@ -1,0 +1,70 @@
+{
+  "name": "runtaskonsave",
+  "displayName": "RunTaskOnSave",
+  "description": "Automatically run a VSCode task when a file matching your specified regular expression is updated. Useful for automating repetitive tasks.",
+  "scripts": {
+    "test": "vscode-test",
+    "package": "vsce package"
+  },
+  "repository": "nishimine/vscode-extension-runtaskonsave",
+  "version": "1.0.0",
+  "publisher": "nishimine",
+  "engines": {
+    "vscode": "^1.95.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./src/extension.js",
+  "enabledApiProposals": [],
+  "contributes": {
+    "configuration": {
+      "type": "object",
+      "title": "RunTaskOnSave",
+      "properties": {
+        "nishimine.runtaskonsave": {
+          "type": "object",
+          "properties": {
+            "enableNotifications": {
+              "type": "boolean",
+              "default": true,
+              "description": "Even if set to false, the error will still be displayed."
+            },
+            "ruleSet": {
+              "type": "array",
+              "default": [],
+              "items": {
+                "type": "object",
+                "required": [
+                  "filePathMatchRegex",
+                  "taskLabel"
+                ],
+                "properties": {
+                  "filePathMatchRegex": {
+                    "type": "string",
+                    "description": "A regular expression value for comparing the full path of a saved file. To use `new RegExp(...)`."
+                  },
+                  "filePathIgnoreRegex": {
+                    "type": "string",
+                    "description": "This flag specifies a regular expression to define file paths that should be ignored during processing. It complements the filePathMatchRegex flag by excluding certain files."
+                  },
+                  "taskLabel": {
+                    "type": "string",
+                    "description": "Value of `tasks[].label` in `.vscode/tasks.json`"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "devDependencies": {
+    "vsce": "^2.15.0",
+    "vscode": "^1.1.34"
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "image": "mcr.microsoft.com/devcontainers/javascript-node:22",
+  "customizations": {
+    "vscode": {
+      "extensions": ["ms-vscode.vscode-node-debug2", "esbenp.prettier-vscode"]
+    }
+  }
+}
