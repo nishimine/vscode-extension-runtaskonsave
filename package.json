@@ -7,8 +7,9 @@
     "package": "vsce package"
   },
   "repository": "nishimine/vscode-extension-runtaskonsave",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "publisher": "nishimine",
+  "icon": "icon.png",
   "engines": {
     "vscode": "^1.95.0"
   },
