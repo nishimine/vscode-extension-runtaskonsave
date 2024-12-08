@@ -1,13 +1,18 @@
 const vscode = require("vscode");
 
 /**
- * @return {{enabledNotifications: boolean, ruleSet: {filePathMatchRegex: string, filePathIgnoreRegex?: string, taskLabel: string}[]}}
+ * @return {{enabledNotifications: boolean, ruleSet: {filePathMatchRegex: string, filePathIgnoreRegex?: string, taskLabel: string, stopPreviousTask: boolean}[]}}
  */
 function getConfiguration() {
   const config = vscode.workspace.getConfiguration("nishimine.runtaskonsave");
   return {
-    enabledNotifications: config.get("enableNotifications"),
-    ruleSet: config.get("ruleSet"),
+    enabledNotifications: config.get("enableNotifications", true),
+    ruleSet: config.get("ruleSet").map((rule) => {
+      if (typeof rule.stopPreviousTask === "undefined") {
+        rule.stopPreviousTask = true;
+      }
+      return rule;
+    }),
   };
 }
 
@@ -34,6 +39,13 @@ function activate(context) {
           const tasks = await vscode.tasks.fetchTasks();
           const targetTask = tasks.find((task) => task.name === rule.taskLabel);
           if (targetTask) {
+            if (rule.stopPreviousTask) {
+              vscode.tasks.taskExecutions.forEach((taskExecution) => {
+                if (taskExecution.task.name === rule.taskLabel) {
+                  taskExecution.terminate();
+                }
+              });
+            }
             vscode.tasks.executeTask(targetTask);
           } else {
             vscode.window.showErrorMessage(

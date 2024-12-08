@@ -7,7 +7,7 @@
     "package": "vsce package"
   },
   "repository": "nishimine/vscode-extension-runtaskonsave",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "publisher": "nishimine",
   "icon": "icon.png",
   "engines": {
@@ -32,16 +32,20 @@
             "enableNotifications": {
               "type": "boolean",
               "default": true,
-              "description": "Even if set to false, the error will still be displayed."
+              "description": "Even if set to false, the error will still be displayed. Default is true."
             },
             "ruleSet": {
               "type": "array",
               "default": [],
               "items": {
                 "type": "object",
+                "default": {
+                  "stopPreviousTask": true
+                },
                 "required": [
                   "filePathMatchRegex",
-                  "taskLabel"
+                  "taskLabel",
+                  "stopPreviousTask"
                 ],
                 "properties": {
                   "filePathMatchRegex": {
@@ -55,6 +59,10 @@
                   "taskLabel": {
                     "type": "string",
                     "description": "Value of `tasks[].label` in `.vscode/tasks.json`"
+                  },
+                  "stopPreviousTask": {
+                    "type": "boolean",
+                    "description": "If true, stops the current task before starting a new one. Default is true."
                   }
                 }
               }

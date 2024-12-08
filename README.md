@@ -21,7 +21,8 @@ Here’s an example of settings to include in `.vscode/settings.json`:
       {
         "filePathMatchRegex": "\\.(jsx?|tsx?|cpp|h)$",
         "filePathIgnoreRegex": "(/node_modules/|/build/|/dist/)$",
-        "taskLabel": "Echo Hoge"
+        "taskLabel": "Echo Hoge",
+        "stopPreviousTask": true
       }
     ]
   }
